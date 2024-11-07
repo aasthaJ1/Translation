@@ -20,7 +20,6 @@ const App = () => {
     socket.on('translatedText', (data) => {
       setTranslatedText(data.englishText); // Assuming server sends { englishText: "..." }
     });
-
     return () => {
       socket.off('translatedText');
     };
@@ -71,13 +70,13 @@ const App = () => {
 
   return (
 <div className="flex items-center justify-center h-screen p-4 overflow-auto bg-grey-400">
-  <div className="flex flex-col w-full h-[50rem] max-w-screen-xl border-2 border-black shadow-lg md:flex-row">
+  <div className="flex flex-col w-full h-[40rem] max-w-screen-xl border-2 border-black shadow-lg md:flex-row">
     <div className="relative flex flex-col flex-1 h-full p-4 text-center rounded-t-lg md:rounded-l-lg">
       {error && <p className="mb-4 text-red-500">{error}</p>}
       <textarea
         value={recognizedText}
         placeholder="Speak in Kannada"
-        className="flex-grow w-full p-2 mb-4 overflow-y-auto border rounded-md"
+        className="flex-grow w-full p-2 mb-4 overflow-y-auto border rounded-md h-44"
         readOnly
       />
       {!isRecognitionActive ? (
@@ -98,14 +97,15 @@ const App = () => {
       <p>{isRecognitionActive ? 'Recognition is Active. Click to Stop.' : 'Click to Start Recognition'}</p>
     </div>
 
-    <div className="h-full border-l-2 border-black md:my-auto"></div>
+    <div className="w-full h-2 my-auto border-t-2 border-black md:hidden"></div> {/* Horizontal divider on small screens */}
+    <div className="hidden w-2 h-full my-auto border-l-2 border-black md:block"></div> {/* Vertical divider on medium and larger screens */}
 
     {/* Right Section - Translated English Text */}
     <div className="flex flex-col flex-1 h-full p-4 text-center rounded-b-lg md:rounded-r-lg">
       <textarea
         value={translatedText}
         placeholder="Translation in English"
-        className="flex-grow w-full p-2 mb-4 overflow-y-auto border rounded-md"
+        className="flex-grow w-full p-2 mb-4 overflow-y-auto border rounded-md h-36"
         readOnly
       />
     </div>
